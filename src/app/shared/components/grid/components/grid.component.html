@@ -1,0 +1,29 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th *ngFor="let column of columns" [hidden]="column.hide">
+                <a href="javascript:void(0);" (click)="sortBy(column.field, column.dataType, orderBy)">{{column.headerName}}</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let record of pagedItems; let i = index; let odd=odd; let even=even;">
+            <tr class ="grid-row" [ngClass]="{ odd: odd, even: even, selected: (i==gridEventObj.selection?.selectedRow) }" (click)="selectRow(i,record)">
+                <th scope="row">{{(i+1)+((page - 1) * pagerRows)}}</th>
+                <td *ngFor="let column of columns" [hidden]="column.hide">
+                    {{record[column.field]}}
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>
+<div>
+    <ngb-pagination 
+        [collectionSize]="pageSize" 
+        [(page)]="page" 
+        [maxSize]="5" 
+        [rotate]="true" 
+        [boundaryLinks]="true">
+    </ngb-pagination>
+</div>
