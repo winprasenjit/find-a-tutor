@@ -1,6 +1,7 @@
 import { SortPipe } from '../../../pipes/order-by';
 import { Column } from '../../../models/column.model';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PageEvent } from '@angular/material';
 
 import * as _ from 'lodash';
 
@@ -10,12 +11,7 @@ import * as _ from 'lodash';
     styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit {
-
     userLoaded = false;
-    pageSize = 1;
-    _page = 1;
-    pagerRows = 10;
-    pagedItems: any = [];
     columns: Column[];
     dataList: Array<any>;
     data: Array<any> = [];
@@ -23,6 +19,12 @@ export class GridComponent implements OnInit {
     orderBy = 'asc';
     selectedRow: number;
     gridEventObj: any = {};
+    pageLength: number;
+    page = 0;
+    pagerRows = 10;
+    pagedItems: any = [];
+    pageSizeOptions = [5, 10, 25, 100];
+    pageEvent: any;
 
     @Output()
     private gridEvent: any = new EventEmitter();
@@ -44,7 +46,7 @@ export class GridComponent implements OnInit {
         }
     }
 
-    get page(): number {
+    /* get page(): number {
         return this._page;
     }
 
@@ -53,7 +55,7 @@ export class GridComponent implements OnInit {
         if (this.data && this.data.length > 0) {
             this.setPage(page);
         }
-    }
+    } */
 
     ngOnInit(): void { }
 
@@ -62,8 +64,13 @@ export class GridComponent implements OnInit {
             const dataObj = this.createCellTemplate(this.dataList[i]);
             this.data.push(dataObj);
         }
-        this.pageSize = this.data.length
-        this.setPage(1);
+        this.pageLength = this.data.length
+        this.pageEvent = {
+            pageIndex: this.page,
+            pageSize: this.pagerRows,
+            length: this.pageLength
+        };
+        this.setPage(this.pageEvent);
     }
 
     createCellTemplate(dataObj: any): any {
@@ -82,13 +89,17 @@ export class GridComponent implements OnInit {
         return guid;
     }
 
-    setPage(page?: number): void {
-        if (page < 1 || page > this.pageSize) {
+    setPage($event: any): void {
+        this.page = $event.pageIndex;
+        this.pagerRows = $event.pageSize;
+        this.pageEvent = $event;
+
+        if (this.page < 0 || this.page > this.pageLength) {
             return;
         }
 
         // get current page of items
-        this.pagedItems = this.data.slice((this.page - 1) * this.pagerRows, (this.page * this.pagerRows));
+        this.pagedItems = this.data.slice((this.page * this.pagerRows), ((this.page + 1) * this.pagerRows));
         this.gridEventObj = {};
     }
 
@@ -98,7 +109,7 @@ export class GridComponent implements OnInit {
         this.orderBy = (orderType === 'asc') ? 'desc' : 'asc';
         this.sortOrder = header + '-' + this.orderBy + '-' + dataType;
         sortPipe.transform(this.data, this.sortOrder);
-        this.setPage(1);
+        this.setPage(this.pageEvent);
     }
 
     selectRow(index: number, row): void {
@@ -106,7 +117,7 @@ export class GridComponent implements OnInit {
         this.gridEventObj.selection = {
             selected: true,
             selectedRow: index,
-            selectedIndex: index + ((this.page - 1) * this.pagerRows),
+            selectedIndex: index + (this.page  * this.pagerRows),
             items: items
         };
 
@@ -117,7 +128,7 @@ export class GridComponent implements OnInit {
         const dataObj = this.createCellTemplate(row);
         this.data.push(dataObj);
         this.dataList.push(dataObj);
-        this.setPage();
+        this.setPage(this.pageEvent);
     }
 
     updateRow(row: any, index: number): void {
@@ -125,14 +136,14 @@ export class GridComponent implements OnInit {
         row.guid = this.data[index].guid;
         dataObj = this.createCellTemplate(row);
         this.data[index] = dataObj;
-        index = _.findIndex(this.dataList, function(obj) { return obj.guid === dataObj.guid });
+        index = _.findIndex(this.dataList, function (obj) { return obj.guid === dataObj.guid });
         this.dataList[index] = dataObj;
-        this.setPage();
+        this.setPage(this.pageEvent);
     }
 
     removeRow(index: number): void {
         _.remove(this.dataList, ['guid', this.data[index].guid]);
         this.data.splice(index, 1);
-        this.setPage();
+        this.setPage(this.pageEvent);
     }
 }

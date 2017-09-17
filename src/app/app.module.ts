@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Routing } from './app.routing';
 import { SharedModule } from './shared/shared.module';
 import { AppMaterialModule } from './app-material.module';
@@ -31,8 +30,7 @@ import { DashboardComponent } from './modules/dashboard/components/dashboard.com
         HttpModule,
         Routing,
         SharedModule,
-        AppMaterialModule,
-        NgbModule.forRoot()
+        AppMaterialModule
     ],
     bootstrap: [AppComponent],
 

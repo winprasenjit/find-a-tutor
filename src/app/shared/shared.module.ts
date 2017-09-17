@@ -7,7 +7,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { GridComponent } from './components/grid/components/grid.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppMaterialModule } from '../app-material.module';
 import { EqualValidatorDirective } from './directives/password.match.directive';
 
@@ -22,8 +21,7 @@ import { EqualValidatorDirective } from './directives/password.match.directive';
         CommonModule,
         AppMaterialModule,
         FormsModule,
-        HttpModule,
-        NgbModule.forRoot()
+        HttpModule
     ],
     exports: [
         AppMaterialModule,
