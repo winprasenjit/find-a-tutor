@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
-import { MD_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 
@@ -14,8 +13,8 @@ export class UserFormComponent implements OnInit {
     user: User;
     submitted = false;
 
-    constructor( @Inject(MD_DIALOG_DATA) public data: any,
-        public dialogRef: MdDialogRef<UserFormComponent>,
+    constructor( @Inject(MAT_DIALOG_DATA) public data: any,
+        public dialogRef: MatDialogRef<UserFormComponent>,
         private userService: UserService) { }
 
     ngOnInit(): void {

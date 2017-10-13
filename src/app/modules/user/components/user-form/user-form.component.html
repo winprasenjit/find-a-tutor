@@ -3,9 +3,9 @@
     <form (ngSubmit)="onSubmit(userForm.value)" #userForm="ngForm" novalidate>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-input-container>
-                    <input type="text" mdInput placeholder="Username" name="username" required minlength="4" maxlength="24" [(ngModel)]="user.username" #username="ngModel">
-                </md-input-container>
+                <mat-input-container>
+                    <input type="text" matInput placeholder="Username" name="username" required minlength="4" maxlength="24" [(ngModel)]="user.username" #username="ngModel">
+                </mat-input-container>
                 <div *ngIf="username.errors && (username.dirty || username.touched)" class="alert alert-danger">
                     <div [hidden]="!username.errors.required">
                         Username is required
@@ -21,9 +21,9 @@
         </div>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-input-container>
-                    <input type="password" mdInput placeholder="Password" name="password" required minlength="4" maxlength="24" [(ngModel)]="user.password" #password="ngModel">
-                </md-input-container>
+                <mat-form-field>
+                    <input type="password" matInput placeholder="Password" name="password" required minlength="4" maxlength="24" [(ngModel)]="user.password" #password="ngModel">
+                </mat-form-field>
                 <div *ngIf="password.errors && (password.dirty || password.touched)" class="alert alert-danger">
                     <div [hidden]="!password.errors.required">
                         Password is required
@@ -39,9 +39,9 @@
         </div>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-input-container>
-                    <input type="password" mdInput placeholder="Confirm Password" id="confirmPassword" required validateEqual="password" [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel">
-                </md-input-container>
+                <mat-form-field>
+                    <input type="password" matInput placeholder="Confirm Password" id="confirmPassword" required validateEqual="password" [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel">
+                </mat-form-field>
                 <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert alert-danger">
                     Passwords did not match
                 </div>
@@ -49,9 +49,9 @@
         </div>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-input-container>
-                    <input type="text" mdInput placeholder="Firstname" name="firstname" required [(ngModel)]="user.firstname" #firstname="ngModel">
-                </md-input-container>
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Firstname" name="firstname" required [(ngModel)]="user.firstname" #firstname="ngModel">
+                </mat-form-field>
                 <div *ngIf="firstname.errors && (firstname.dirty || firstname.touched)" class="alert alert-danger">
                     <div [hidden]="!firstname.errors.required">
                         Firstname is required
@@ -61,9 +61,9 @@
         </div>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-input-container>
-                    <input type="text" mdInput placeholder="Lastname" name="lastname" required [(ngModel)]="user.lastname" #lastname="ngModel">
-                </md-input-container>
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Lastname" name="lastname" required [(ngModel)]="user.lastname" #lastname="ngModel">
+                </mat-form-field>
                 <div *ngIf="lastname.errors && (lastname.dirty || lastname.touched)" class="alert alert-danger">
                     <div [hidden]="!lastname.errors.required">
                         Lastname is required
@@ -73,15 +73,15 @@
         </div>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-input-container>
-                    <input type="text" mdInput placeholder="Mobile" name="mobile" required pattern="[0-9]*" minlength="10" maxlength="10" [(ngModel)]="user.mobile" #mobile="ngModel">
-                </md-input-container>
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Mobile" name="mobile" required pattern="[0-9]*" minlength="10" maxlength="10" [(ngModel)]="user.mobile" #mobile="ngModel">
+                </mat-form-field>
                 <div *ngIf="mobile.errors && (mobile.dirty || mobile.touched)" class="alert alert-danger">
                     <div [hidden]="!mobile.errors.required">
                         Mobile is required
                     </div>
                     <div [hidden]="!mobile.errors.minlength">
-                        Mobile must be 10 characters long.
+                        Mat6obile must be 10 characters long.
                     </div>
                     <div [hidden]="!mobile.hasError('pattern')">
                         Mobile number should be only numbers
@@ -91,9 +91,10 @@
         </div>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-input-container>
-                    <input type="text" mdInput placeholder="Email" name="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [(ngModel)]="user.email" #email="ngModel">
-                </md-input-container>
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Email" name="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
+                    [(ngModel)]="user.email" #email="ngModel">
+                </mat-form-field>
                 <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
                     <div [hidden]="!email.errors.required">Email is required</div>
                     <div [hidden]="!email.errors.pattern">Email format should be
@@ -104,10 +105,10 @@
         </div>
         <div class="row sex-column">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <md-radio-group [(ngModel)]="user.sex" name="sex" required #sex="ngModel">
-                    <md-radio-button value="Male">Male</md-radio-button>
-                    <md-radio-button value="Female">Female</md-radio-button>
-                </md-radio-group>
+                <mat-radio-group [(ngModel)]="user.sex" name="sex" required #sex="ngModel">
+                    <mat-radio-button value="Male">Male</mat-radio-button>
+                    <mat-radio-button value="Female">Female</mat-radio-button>
+                </mat-radio-group>
                 <div *ngIf="sex.errors && (sex.dirty || sex.touched)" class="alert alert-danger">
                     <div [hidden]="!sex.errors.required">Sex is required</div>
                 </div>
@@ -117,17 +118,17 @@
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
                 Communication
-                <md-slider min="0" max="5" step="1" value="{{user.rating.communication}}" thumbLabel (input)="getSliderVal($event, 'communication')"></md-slider>
+                <mat-slider min="0" max="5" step="1" value="{{user.rating.communication}}" thumbLabel (input)="getSliderVal($event, 'communication')"></mat-slider>
                 Attitude
-                <md-slider min="0" max="5" step="1" value="{{user.rating.attitude}}" thumbLabel (input)="getSliderVal($event, 'attitude')"></md-slider>
+                <mat-slider min="0" max="5" step="1" value="{{user.rating.attitude}}" thumbLabel (input)="getSliderVal($event, 'attitude')"></mat-slider>
                 Sense
-                <md-slider min="0" max="5" step="1" value="{{user.rating.sense}}" thumbLabel (input)="getSliderVal($event, 'sense')"></md-slider>
+                <mat-slider min="0" max="5" step="1" value="{{user.rating.sense}}" thumbLabel (input)="getSliderVal($event, 'sense')"></mat-slider>
             </div>
         </div>
 
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <button md-raised-button [disabled]="!userForm.form.valid">Submit</button>
+                <button mat-raised-button [disabled]="!userForm.form.valid">Submit</button>
             </div>
         </div>
     </form>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
@@ -23,7 +23,7 @@ export class UserComponent implements OnInit {
 
     @ViewChild(GridComponent) gridComponent: GridComponent;
 
-    constructor(private userService: UserService, public dialog: MdDialog) { }
+    constructor(private userService: UserService, public dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.getUserColumn();
@@ -86,7 +86,7 @@ export class UserComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (typeof result !== 'undefined') {
-                this.gridComponent.updateRow(result, this.rowIndex); 
+                this.gridComponent.updateRow(result, this.rowIndex);
             }
         });
     }
