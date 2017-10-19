@@ -4,6 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
 import * as _ from 'lodash';
+declare var $: any; // JQuery
 
 @Component({
     selector: 'custom-grid',
@@ -71,6 +72,8 @@ export class GridComponent implements OnInit {
             length: this.pageLength
         };
         this.setPage(this.pageEvent);
+        $('.custom-bootstrap-table').jsdragtable();
+        $('.custom-bootstrap-table').colResizable({ resizeMode: 'flex' });
     }
 
     createCellTemplate(dataObj: any): any {
@@ -117,7 +120,7 @@ export class GridComponent implements OnInit {
         this.gridEventObj.selection = {
             selected: true,
             selectedRow: index,
-            selectedIndex: index + (this.page  * this.pagerRows),
+            selectedIndex: index + (this.page * this.pagerRows),
             items: items
         };
 

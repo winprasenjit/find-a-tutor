@@ -17,3 +17,6 @@
 .material-pagination{
     float: right;
 }
+.grid-container .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{
+    padding: 8px !important;
+}
