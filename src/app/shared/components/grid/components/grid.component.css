@@ -17,6 +17,12 @@
 .material-pagination{
     float: right;
 }
+.grid-container .custom-bootstrap-table .sl-no{
+    width: 50px !important;
+}
 .grid-container .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{
     padding: 8px !important;
+}
+.grid-container .form-group{
+    margin-bottom: 0;
 }

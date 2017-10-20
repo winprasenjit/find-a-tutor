@@ -13,9 +13,11 @@ var Anterec;
                 $(header).off("mousedown touchstart");
                 $(header).off("mouseup touchend");
                 $(header).on("mousedown touchstart", function (event) {
+                    if($(event.target).hasClass('disable-drag-drop')) return false;
                     _this.selectColumn($(header), event);
                 });
                 $(header).on("mouseup touchend", function (event) {
+                    if($(event.target).hasClass('disable-drag-drop')) return false;
                     _this.dropColumn($(header), event);
                 });
             });

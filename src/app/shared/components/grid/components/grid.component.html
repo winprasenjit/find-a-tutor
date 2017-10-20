@@ -2,16 +2,31 @@
     <table class="table table-bordered custom-bootstrap-table">
         <thead>
             <tr>
-                <th>#</th>
+                <th class="sl-no">#</th>
                 <th *ngFor="let column of columns" [hidden]="column.hide">
-                    <a href="javascript:void(0);" (click)="sortBy(column.field, column.dataType, orderBy)">{{column.headerName}}</a>
+                    <a href="javascript:void(0);" 
+                        class="disable-drag-drop"
+                        (click)="sortBy(column.field, column.dataType, orderBy)">{{column.headerName}}</a>
+                    <i class="fa fa-sort disable-drag-drop" 
+                    [ngClass]="{'fa-sort-asc': (this.orderBy == 'asc'), 
+                                'fa-sort-desc': (this.orderBy == 'desc') }"
+                    aria-hidden="true"> </i>
                 </th>
             </tr>
         </thead>
         <tbody>
+            <tr class="grid-inline-search">
+                <td>&nbsp;</td>
+                <td *ngFor="let column of columns" [hidden]="column.hide">
+                    <div class="form-group">
+                        <input #searchText class="form-control" placeholder="search {{column.headerName}}" 
+                            (keyup)="filterResult(searchText.value, column)">
+                    </div>
+                </td>
+            </tr>
             <ng-container *ngFor="let record of pagedItems; let i = index; let odd=odd; let even=even;">
-                <tr class ="grid-row" [ngClass]="{ odd: odd, even: even, selected: (i==gridEventObj.selection?.selectedRow) }" (click)="selectRow(i,record)">
-                    <th scope="row">{{(i+1)+(page * pagerRows)}}</th>
+                <tr class ="grid-row" [ngClass]="{ odd: odd, even: even, selected: (i==gridEventObj?.selection?.selectedRow) }" (click)="selectRow(i,record)">
+                    <td scope="row">{{(i+1)+(page * pagerRows)}}</td>
                     <td *ngFor="let column of columns" [hidden]="column.hide">
                         {{record[column.field]}}
                     </td>

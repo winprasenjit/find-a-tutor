@@ -13,11 +13,13 @@ declare var $: any; // JQuery
 })
 export class GridComponent implements OnInit {
     userLoaded = false;
+    searchText: string;
     columns: Column[];
     dataList: Array<any>;
     data: Array<any> = [];
+    stackedDataList: Array<any> = [];
     sortOrder: string;
-    orderBy = 'asc';
+    orderBy: string;
     selectedRow: number;
     gridEventObj: any = {};
     pageLength: number;
@@ -47,6 +49,7 @@ export class GridComponent implements OnInit {
         }
     }
 
+    //#region no longer required
     /* get page(): number {
         return this._page;
     }
@@ -57,6 +60,7 @@ export class GridComponent implements OnInit {
             this.setPage(page);
         }
     } */
+    //#endregion
 
     ngOnInit(): void { }
 
@@ -64,6 +68,7 @@ export class GridComponent implements OnInit {
         for (let i = 0; i < this.dataList.length; i++) {
             const dataObj = this.createCellTemplate(this.dataList[i]);
             this.data.push(dataObj);
+            this.stackedDataList.push(dataObj);
         }
         this.pageLength = this.data.length
         this.pageEvent = {
@@ -72,8 +77,11 @@ export class GridComponent implements OnInit {
             length: this.pageLength
         };
         this.setPage(this.pageEvent);
-        $('.custom-bootstrap-table').jsdragtable();
-        $('.custom-bootstrap-table').colResizable({ resizeMode: 'flex' });
+
+        setTimeout(() => {
+            $('.custom-bootstrap-table').jsdragtable();
+            $('.custom-bootstrap-table').colResizable({ resizeMode: 'flex' });
+        });
     }
 
     createCellTemplate(dataObj: any): any {
@@ -117,12 +125,16 @@ export class GridComponent implements OnInit {
 
     selectRow(index: number, row): void {
         const items = _.find(this.dataList, ['guid', row.guid]);
-        this.gridEventObj.selection = {
-            selected: true,
-            selectedRow: index,
-            selectedIndex: index + (this.page * this.pagerRows),
-            items: items
-        };
+        if (this.gridEventObj.selection && (items.guid === this.gridEventObj.selection.items.guid)) {
+            this.gridEventObj.selection = null;
+        } else {
+            this.gridEventObj.selection = {
+                selected: true,
+                selectedRow: index,
+                selectedIndex: index + (this.page * this.pagerRows),
+                items: items
+            };
+        }
 
         this.gridEvent.emit(this.gridEventObj);
     }
@@ -147,6 +159,22 @@ export class GridComponent implements OnInit {
     removeRow(index: number): void {
         _.remove(this.dataList, ['guid', this.data[index].guid]);
         this.data.splice(index, 1);
+        this.setPage(this.pageEvent);
+    }
+
+    filterResult(searchText: string, column: any): void {
+        this.data = this.stackedDataList.slice(0);
+
+        this.data = this.data.filter(function (row) {
+            return row[column.field].toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+        });
+
+        this.pageLength = this.data.length;
+        this.pageEvent = {
+            pageIndex: 0,
+            pageSize: this.pagerRows,
+            length: this.pageLength
+        };
         this.setPage(this.pageEvent);
     }
 }

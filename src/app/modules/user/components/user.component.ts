@@ -102,6 +102,8 @@ export class UserComponent implements OnInit {
     }
 
     trackEvent(event: any): void {
+        this.selectedItems = null;
+        this.rowIndex = null;
         if (event.selection && event.selection.selected) {
             this.selectedItems = event.selection.items;
             this.rowIndex = event.selection.selectedIndex;
