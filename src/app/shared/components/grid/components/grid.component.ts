@@ -1,6 +1,7 @@
 import { SortPipe } from '../../../pipes/order-by';
+import { FilterArrayPipe } from '../../../pipes/filter-array-pipe';
 import { Column } from '../../../models/column.model';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Pipe } from '@angular/core';
 import { PageEvent } from '@angular/material';
 
 import * as _ from 'lodash';
@@ -9,7 +10,7 @@ declare var $: any; // JQuery
 @Component({
     selector: 'custom-grid',
     templateUrl: './grid.component.html',
-    styleUrls: ['./grid.component.css']
+    styleUrls: ['./grid.component.css'],
 })
 export class GridComponent implements OnInit {
     userLoaded = false;
@@ -28,6 +29,7 @@ export class GridComponent implements OnInit {
     pagedItems: any = [];
     pageSizeOptions = [5, 10, 25, 100];
     pageEvent: any;
+    globalSearchText: string;
 
     @Output()
     private gridEvent: any = new EventEmitter();
@@ -176,5 +178,19 @@ export class GridComponent implements OnInit {
             length: this.pageLength
         };
         this.setPage(this.pageEvent);
+    }
+
+    globalFilterResult(): void {
+        const filterArrPipe = new FilterArrayPipe();
+        this.data = this.stackedDataList.slice(0);
+        this.data = filterArrPipe.transform(this.data, this.globalSearchText);
+        this.pageLength = this.data.length;
+        this.pageEvent = {
+            pageIndex: 0,
+            pageSize: this.pagerRows,
+            length: this.pageLength
+        };
+        this.setPage(this.pageEvent);
+
     }
 }

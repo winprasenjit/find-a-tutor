@@ -1,21 +1,28 @@
+import { AlertComponent } from './components/alert/components/alert.component';
+
+import { AuthGuard } from './helper/auth.guard';
+import { AlertService } from './services/alert.service';
 import { ActionButtonsComponent } from './components/action-buttons/components/action-buttons.component';
 import { SortPipe } from './pipes/order-by';
+import { FilterArrayPipe } from './pipes/filter-array-pipe';
 import { SharedService } from './services/shared.service';
+import { GridComponent } from './components/grid/components/grid.component';
+import { AppMaterialModule } from '../app-material.module';
+import { EqualValidatorDirective } from './directives/password.match.directive';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { GridComponent } from './components/grid/components/grid.component';
-import { AppMaterialModule } from '../app-material.module';
-import { EqualValidatorDirective } from './directives/password.match.directive';
 
 @NgModule({
     declarations: [
+        AlertComponent,
         GridComponent,
         ActionButtonsComponent,
         EqualValidatorDirective,
-        SortPipe
+        SortPipe,
+        FilterArrayPipe,
     ],
     imports: [
         CommonModule,
@@ -25,11 +32,17 @@ import { EqualValidatorDirective } from './directives/password.match.directive';
     ],
     exports: [
         AppMaterialModule,
+        AlertComponent,
         GridComponent,
         ActionButtonsComponent,
         EqualValidatorDirective,
-        SortPipe
+        SortPipe,
+        FilterArrayPipe
     ],
-    providers: [SharedService],
+    providers: [
+        SharedService,
+        AuthGuard,
+        AlertService
+    ],
 })
 export class SharedModule { }

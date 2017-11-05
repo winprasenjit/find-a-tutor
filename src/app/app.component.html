@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" *ngIf="isLoggedIn">
     <!-- navbar-header -->
     <header></header>
     <!-- /.navbar-header -->
@@ -13,10 +13,11 @@
     <!-- /.sidebar -->
 </nav>
 
-<div id="page-wrapper">
+<div [attr.id]="isLoggedIn ? 'page-wrapper' : 'login-wrapper'" >
     <div class="container-fluid" style="padding-top:20px;">
         <div class="row">
             <div class="col-lg-12">
+                <alert></alert>
                 <router-outlet></router-outlet>
             </div>
         </div>

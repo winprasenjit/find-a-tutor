@@ -21,9 +21,11 @@ export class SharedService {
             formData = {};
         }
         formData.timeStamp = new Date().getTime();
-        let params: URLSearchParams = new URLSearchParams();
-        for (let x in formData) {
-            params.set(x, formData[x]);
+        const params: URLSearchParams = new URLSearchParams();
+        for (const x in formData) {
+            if (formData.hasOwnProperty(x)) {
+                params.set(x, formData[x]);
+            }
         }
         this.options = new RequestOptions({ headers: this.headers, search: params });
 
