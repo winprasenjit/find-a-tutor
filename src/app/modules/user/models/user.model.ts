@@ -12,9 +12,11 @@ export interface IUsers {
     lastname: string;
     username: string;
     password: string;
+    subject?: Array<string>;
     sex?: { 'Male', 'Female' };
     rating?: any;
     confirmPassword?: any;
+    aboutu?: any;
 }
 
 export class User {
@@ -26,9 +28,11 @@ export class User {
     lastname: string;
     username: string;
     password: string;
+    subject?: Array<string>;
     sex?: { 'Male', 'Female' };
     rating?: rating;
     confirmPassword?: any;
+    aboutu?: any;
 
     constructor(userObj: IUsers) {
         // Check enum

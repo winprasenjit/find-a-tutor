@@ -21,12 +21,12 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
-        private communicationnService: CommunicationService) { }
+        private communicationService: CommunicationService) { }
 
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-        this.communicationnService.setLoginType(false);
+        this.communicationService.setLoginType(false);
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -43,11 +43,11 @@ export class LoginComponent implements OnInit {
             .subscribe(
             data => {
                 this.router.navigate([this.returnUrl]);
-                this.communicationnService.setLoginType(true);
+                this.communicationService.setLoginType(true);
             },
             error => {
                 this.alertService.error(error._body);
-                //this.loading = false;
+                // this.loading = false;
             });
     }
 }

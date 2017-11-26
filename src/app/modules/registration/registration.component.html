@@ -1,3 +1,61 @@
-<p>
-  registration works!
-</p>
+<div id="page-wrapper" class="registration-form">
+    <h2 class="page-header">Register</h2>
+    <form role="form" (ngSubmit)="onSubmit(user)" [formGroup]="user" novalidate>
+        <div class="example-container">
+            <mat-form-field>
+                <input type="text" matInput placeholder="Firstname" formControlName="firstname" autofocus>
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" matInput placeholder="Lastname" formControlName="lastname">
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" matInput placeholder="Username" formControlName="username">
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" matInput placeholder="Password" formControlName="password">
+                <!-- <mat-error *ngIf="user.get('password').touched && user.get('confirmPassword').touched && !user.get('password').errors?.ValidConfirmPassword">Confirm Password doesn't match</mat-error> -->
+            </mat-form-field>
+            <mat-form-field>
+                <input type="text" matInput placeholder="Confirm Password" formControlName="confirmPassword">
+                <mat-error *ngIf="user.get('confirmPassword').touched && user.get('password').touched && !user.get('confirmPassword').errors?.ValidConfirmPassword">Confirm Password doesn't match</mat-error>
+            </mat-form-field>
+            <mat-radio-group formControlName="sex">
+                <mat-radio-button value="male">Male</mat-radio-button>
+                <mat-radio-button value="female">Female</mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field class="dob">
+                <input matInput [matDatepicker]="picker" placeholder="Select your birth date" formControlName="dob">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="category">
+                <mat-select placeholder="Subject" formControlName="subject" multiple>
+                    <mat-option *ngFor="let subject of subjectList" [value]="subject">{{subject}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title class="card-header"><b>Contact Information</b></mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-form-field class="contact-info">
+                        <input matInput placeholder="Enter your email" formControlName="email" email>
+                    </mat-form-field>
+                    <mat-form-field class="contact-info">
+                        <input matInput placeholder="Enter your mobile" formControlName="mobile" maxlength="10">
+                        <mat-error *ngIf="user.get('mobile').touched && !user.get('mobile').errors?.MobileNumberValidation">Please insert valid phone number</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <textarea matInput placeholder="About you" formControlName="aboutu"></textarea>
+                    </mat-form-field>
+                </mat-card-content>
+            </mat-card>
+            <div class="checkbox-selection">
+                <mat-checkbox formControlName="isAgree">Are you agree</mat-checkbox>
+            </div>
+            <div class="button-row">
+                <button mat-raised-button color="primary">Primary</button>
+            </div>
+        </div>
+    </form>
+</div>

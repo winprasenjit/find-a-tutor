@@ -1,0 +1,48 @@
+.registration-form {
+    padding-bottom: 20px !important;
+    margin: 0 auto !important;
+    max-width: 975px !important;
+}
+
+.page-header {
+    padding-top: 20px;
+}
+
+.dob {
+    margin-top: 10px;
+    width: 30%;
+}
+
+.category {
+    width: 50%
+}
+
+.mat-radio-group {
+    margin-top: 10px;
+}
+
+.example-card {
+    width: 75%;
+    margin-top: 10px;
+}
+
+.contact-info {
+    display: block;
+    width: 50%;
+}
+
+.checkbox-selection {
+    margin-top: 20px;
+}
+
+.button-row {
+    margin-top: 10px;
+}
+
+.mat-card-content {
+    padding-left: 20px;
+}
+
+.example-full-width {
+    width: 100%;
+}
