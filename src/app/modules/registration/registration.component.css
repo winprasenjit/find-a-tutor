@@ -4,6 +4,11 @@
     max-width: 975px !important;
 }
 
+.image-sec{
+    display: block;
+    padding-left: 0;
+}
+
 .page-header {
     padding-top: 20px;
 }
@@ -45,4 +50,14 @@
 
 .example-full-width {
     width: 100%;
+}
+
+#photo{
+    display: inline-block;
+    max-width: 250px;
+}
+
+.profile-image{
+    width:200px;
+    height : 150px;
 }

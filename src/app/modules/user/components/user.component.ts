@@ -16,7 +16,7 @@ import { GridComponent } from '../../../shared/components/grid/components/grid.c
 })
 export class UserComponent implements OnInit {
     columnLoaded = false;
-    users: User[];
+    users: User[] = [];
     column: Column[];
     selectedItems: User;
     rowIndex: number;

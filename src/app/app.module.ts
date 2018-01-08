@@ -19,6 +19,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoryModule } from './modules/category/category.module';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
         HttpModule,
         Routing,
         SharedModule,
-        AppMaterialModule
+        AppMaterialModule,
+        CategoryModule
     ],
     providers : [
         AuthenticationService,

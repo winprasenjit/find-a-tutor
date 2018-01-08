@@ -1,9 +1,22 @@
 <div id="page-wrapper" class="registration-form">
     <h2 class="page-header">Register</h2>
+    <div class="container-fluid image-sec">
+        <div class="clear">
+            <!-- File input for upload without using the plugin. -->
+            <input id="photo" type="file" />
+            <!-- button to trigger the file upload when submitted -->
+            <button mat-raised-button color="primary" (click)="upload()">
+                Upload
+            </button>
+        </div>
+        <div class="pull-left">
+            <img src="{{uploadImg}}" alt="" class="profile-image">
+        </div>
+    </div>
     <form role="form" (ngSubmit)="onSubmit(user)" [formGroup]="user" novalidate>
         <div class="example-container">
             <mat-form-field>
-                <input type="text" matInput placeholder="Firstname" formControlName="firstname" autofocus>
+                <input type="text" matInput placeholder="Firstname" formControlName="firstname">
             </mat-form-field>
             <mat-form-field>
                 <input type="text" matInput placeholder="Lastname" formControlName="lastname">
@@ -30,7 +43,7 @@
             </mat-form-field>
             <mat-form-field class="category">
                 <mat-select placeholder="Subject" formControlName="subject" multiple>
-                    <mat-option *ngFor="let subject of subjectList" [value]="subject">{{subject}}</mat-option>
+                    <mat-option *ngFor="let subject of subjectList" [value]="subject.name">{{subject.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-card class="example-card">
@@ -54,7 +67,7 @@
                 <mat-checkbox formControlName="isAgree">Are you agree</mat-checkbox>
             </div>
             <div class="button-row">
-                <button mat-raised-button color="primary">Primary</button>
+                <button mat-raised-button color="primary" [disabled]="!subjectList.length>0">Primary</button>
             </div>
         </div>
     </form>

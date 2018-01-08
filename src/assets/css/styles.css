@@ -2317,3 +2317,7 @@ table.dataTable thead .sorting:after {
 .example-container>* {
     width: 100%;
 }
+
+div.mat-select-panel.mat-primary.mat-select-panel-done-animating.mat-select-panel-done-animating{
+    margin-left: 45px;
+}

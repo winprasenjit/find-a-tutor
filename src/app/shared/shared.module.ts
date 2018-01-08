@@ -12,7 +12,7 @@ import { EqualValidatorDirective } from './directives/password.match.directive';
 
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 @NgModule({
@@ -28,9 +28,12 @@ import { HttpModule } from '@angular/http';
         CommonModule,
         AppMaterialModule,
         FormsModule,
+        ReactiveFormsModule,
         HttpModule
     ],
     exports: [
+        FormsModule,
+        ReactiveFormsModule,
         AppMaterialModule,
         AlertComponent,
         GridComponent,

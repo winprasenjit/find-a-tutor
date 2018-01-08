@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 md-dialog-title>Create Category</h4>
+    </div>
+
+    <div class="category-create-form panel-body">
+        <form (ngSubmit)="onSubmit(categoryForm)" [formGroup]="categoryForm" novalidate>
+            <div class="row">
+                <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
+                    <mat-input-container>
+                        <input type="text" matInput placeholder="Category" formControlName="name">
+                    </mat-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
+                    <button mat-raised-button [disabled]="!categoryForm.valid || !categoryForm.dirty"
+                        color="primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
