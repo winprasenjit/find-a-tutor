@@ -24,7 +24,8 @@ export class CategoryFormComponent implements OnInit {
     ngOnInit(): void {
         this.isUpdate = (!this.data) ? false : true;
         this.categoryForm = this.fb.group({
-            name: [(this.data) ? this.data.name : '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+            name: [(this.data) ? this.data.name : '',
+                [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
         });
     }
 
@@ -54,5 +55,4 @@ export class CategoryFormComponent implements OnInit {
                 this.dialogRef.close(result);
             });
     }
-
 }

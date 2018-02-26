@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryModule } from './modules/category/category.module';
+import { ContactModule } from './modules/contact/contact.module';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { CategoryModule } from './modules/category/category.module';
         Routing,
         SharedModule,
         AppMaterialModule,
-        CategoryModule
+        CategoryModule,
+        ContactModule
     ],
     providers : [
         AuthenticationService,

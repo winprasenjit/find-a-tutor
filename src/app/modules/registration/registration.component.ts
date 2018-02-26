@@ -1,6 +1,5 @@
-import { IUsers } from './../user/models/user.model';
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { FormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { ValidateConfirmPassword } from '../../shared/validators/confirm-password.validator';
 import { MobileNumberValidation } from '../../shared/validators/mobile-number.validator';
 import { UserService } from '../user/services/user.service';
@@ -12,6 +11,7 @@ import { Http, Response } from '@angular/http';
 import { ApiSettings } from '../../shared/constants/api.constant';
 import { Category } from '../category/models/category';
 import { CategoryService } from '../category/services/category.service';
+import { IUsers } from '../../shared/interfaces/iUser';
 
 @Component({
     selector: 'app-registration',
@@ -43,13 +43,32 @@ export class RegistrationComponent implements OnInit {
             password: ['', [Validators.required, Validators.minLength(4)]], // , ValidateConfirmPassword('confirmPassword')
             confirmPassword: ['', [Validators.required, Validators.minLength(4), ValidateConfirmPassword('password')]],
             sex: ['', [Validators.required]],
-            email: ['', [Validators.required]],
-            mobile: ['', [Validators.required, MobileNumberValidation]],
             dob: ['', [Validators.required]],
-            aboutu: [''],
+            contact: this.fb.array([]),
             subject: [''],
             isAgree: ['', [Validators.required]]
         });
+        this.addContact();
+    }
+
+    initContact() {
+        return this.fb.group({
+            email: ['', [Validators.required, Validators.email]],
+            mobile: ['', [Validators.required, MobileNumberValidation]],
+            aboutu: []
+        });
+    }
+
+    addContact() {
+        const control = <FormArray>this.user.controls['contact'];
+        const addrCtrl = this.initContact();
+
+        control.push(addrCtrl);
+
+        /* //subscribe to individual address value changes
+        addrCtrl.valueChanges.subscribe(x => {
+            console.log(x);
+        })*/
     }
 
     getCategoryData(): void {
@@ -92,11 +111,11 @@ export class RegistrationComponent implements OnInit {
                 .post(this.uploadUrl, formData)
                 .map((res: Response) => res.json())
                 .subscribe(
-                // map the success function and alert the response
-                (response) => {
-                    this.uploadImg = ApiSettings.API_ENDPOINT + response.filePath;
-                },
-                (error) => console.log(error))
+                    // map the success function and alert the response
+                    (response) => {
+                        this.uploadImg = ApiSettings.API_ENDPOINT + response.filePath;
+                    },
+                    (error) => console.log(error))
         }
     }
 }

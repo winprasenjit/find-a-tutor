@@ -1,4 +1,3 @@
-import { IUsers } from './../../user/models/user.model';
 import { AlertService } from './../../../shared/services/alert.service';
 import { AuthenticationService } from './../../../shared/services/authentication.service';
 import { CommunicationService } from './../../../shared/services/communication.service';
@@ -6,6 +5,7 @@ import { CommunicationService } from './../../../shared/services/communication.s
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IUsers } from '../../../shared/interfaces/iUser';
 
 @Component({
     selector: 'login',

@@ -8,7 +8,8 @@ import { Column } from '../../../shared/models/column.model';
 
 @Injectable()
 export class CategoryService {
-    categoryAPI = ApiSettings.CATEGORY_API;
+    private categoryAPI = ApiSettings.CATEGORY_API;
+
     constructor(private sharedService: SharedService) { }
 
     getColumns(): Observable<Column[]> {

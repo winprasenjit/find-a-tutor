@@ -6,6 +6,7 @@ import { UserRouting } from './user.routing';
 import { UserComponent } from './components/user.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserService } from './services/user.service';
+import { ContactModule } from '../contact/contact.module';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { UserService } from './services/user.service';
     imports: [
         CommonModule,
         UserRouting,
+        ContactModule,
         SharedModule
     ],
     entryComponents : [UserFormComponent],

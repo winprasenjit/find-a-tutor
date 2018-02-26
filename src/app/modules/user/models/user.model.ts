@@ -1,38 +1,29 @@
+import { IUsers } from '../../../shared/interfaces/iUser';
+import { IContact } from '../../../shared/interfaces/iContact';
 const enum rating {
     communication = 5,
     attitude = 5,
     sense = 5
 }
 
-export interface IUsers {
-    _id?: string;
-    email: string;
-    mobile: number;
-    firstname: string;
-    lastname: string;
-    username: string;
-    password: string;
-    subject?: Array<string>;
-    sex?: { 'Male', 'Female' };
-    rating?: any;
-    confirmPassword?: any;
-    aboutu?: any;
-}
-
 export class User {
     _id?: string;
     name: string;
-    email: string;
-    mobile: number;
     firstname: string;
     lastname: string;
     username: string;
     password: string;
+    contact : IContact[];
     subject?: Array<string>;
     sex?: { 'Male', 'Female' };
-    rating?: rating;
+    rating?: {
+        communication: 5,
+        attitude: 5,
+        sense: 5
+    };
     confirmPassword?: any;
-    aboutu?: any;
+    email ? : string;
+    mobile? : string;
 
     constructor(userObj: IUsers) {
         // Check enum

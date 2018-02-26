@@ -8,4 +8,6 @@ export class ApiSettings {
 
     public static CATEGORY_COLUMN_JSON = '/assets/json/category-column.json';
     public static CATEGORY_API = ApiSettings.API_ENDPOINT + 'category';
+
+    public static ADD_POST_API = ApiSettings.API_ENDPOINT + 'addPost';
 }
