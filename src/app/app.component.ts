@@ -3,7 +3,7 @@ import { CommunicationService } from './shared/services/communication.service';
 
 import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver, OnInit } from '@angular/core';
 
-declare var $: any; // JQuery
+declare var jQuery: any; // JQuery
 
 @Component({
     selector: 'app-root',

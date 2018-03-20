@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import {
+    MatToolbarModule,
     MatCheckboxModule,
     MatCardModule,
     MatInputModule,
@@ -12,6 +13,7 @@ import {
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatListModule,
     MatPaginatorModule
 } from '@angular/material';
 
@@ -19,6 +21,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
     exports: [
+        MatToolbarModule,
         MatCheckboxModule,
         MatCardModule,
         MatInputModule,
@@ -32,6 +35,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatPaginatorModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatListModule,
         CdkTableModule
     ],
     providers: [

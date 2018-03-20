@@ -7,7 +7,8 @@ import { DashboardComponent } from './modules/dashboard/components/dashboard.com
 import { CategoryComponent } from './modules/category/components/category.component';
 
 const routes: Routes = [
-    { path: '', loadChildren : './modules/timeline/timeline.module#TimelineModule' },
+    { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'timeline', loadChildren : './modules/timeline/timeline.module#TimelineModule' },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'user', loadChildren: './modules/user/user.module#UserModule', canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },

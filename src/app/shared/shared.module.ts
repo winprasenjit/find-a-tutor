@@ -14,6 +14,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AuthenticationService } from './services/authentication.service';
+import { CommunicationService } from 'app/shared/services/communication.service';
+import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +26,7 @@ import { HttpModule } from '@angular/http';
         EqualValidatorDirective,
         SortPipe,
         FilterArrayPipe,
+        ImageUploaderComponent,
     ],
     imports: [
         CommonModule,
@@ -40,12 +44,16 @@ import { HttpModule } from '@angular/http';
         ActionButtonsComponent,
         EqualValidatorDirective,
         SortPipe,
-        FilterArrayPipe
+        FilterArrayPipe,
+        ImageUploaderComponent
     ],
     providers: [
+        AuthenticationService,
+        CommunicationService,
         SharedService,
         AuthGuard,
         AlertService
     ],
+    entryComponents : [ImageUploaderComponent]
 })
 export class SharedModule { }

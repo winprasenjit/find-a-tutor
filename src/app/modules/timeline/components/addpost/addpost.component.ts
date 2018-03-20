@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormsModule, FormGroup, FormControlName, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import * as _ from 'lodash';
 
 import { PostService } from '../../services/post.service';
 import { Post } from '../../models/post';
@@ -8,10 +9,15 @@ import { GlobalConstant } from '../../../../shared/constants/global.constant';
 import { Category } from '../../../category/models/category';
 import { CategoryService } from '../../../category/services/category.service';
 import { MobileNumberValidation } from '../../../../shared/validators/mobile-number.validator';
+import { AuthenticationService } from '../../../../shared/services/authentication.service';
 
 @Component({
     selector: 'app-addpost',
     templateUrl: './addpost.component.html',
+    providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+    ],
     styleUrls: ['./addpost.component.css']
 })
 export class AddpostComponent implements OnInit {
@@ -25,14 +31,15 @@ export class AddpostComponent implements OnInit {
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<AddpostComponent>,
         private categoryService: CategoryService,
+        private authService: AuthenticationService,
         private addPostService: PostService) {
     }
 
     ngOnInit(): void {
         this.getCategoryData();
-        this.isUpdate = (!this.data) ? false : true;
+        this.isUpdate = (_.isEmpty(this.data)) ? false : true;
         this.addPostForm = this.fb.group({
-            name: [(this.data) ? this.data.name : '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+            title: [(this.data) ? this.data.title : '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
             subject: ['', [Validators.required]],
             description: ['', [Validators.required]],
             contact: this.fb.array([]),
@@ -65,11 +72,14 @@ export class AddpostComponent implements OnInit {
         this.addPostService
             .updatePost(this.data)
             .subscribe((result: Post) => {
-                this.dialogRef.close(result);
+                if (this.dialogRef) {
+                    this.dialogRef.close(result);
+                }
             });
     }
 
     initContact() {
+        this.getContactData();
         return this.fb.group({
             email: ['', [Validators.required, Validators.email]],
             mobile: ['', [Validators.required, MobileNumberValidation]],
@@ -95,6 +105,11 @@ export class AddpostComponent implements OnInit {
             .subscribe((result: Category[]) => {
                 this.subjectList = result;
             });
+    }
+
+    getContactData() {
+        console.dir(this.authService.User);
+        return;
     }
 }
 

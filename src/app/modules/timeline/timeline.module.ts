@@ -8,6 +8,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { PostService } from './services/post.service';
 import { ContactModule } from '../contact/contact.module';
 import { ContactFormComponent } from '../contact/components/contact-form/contact-form.component';
+import { PostComponent } from './components/post/post.component';
+import { ListPostComponent } from './components/list-post/list-post.component';
 
 @NgModule({
     imports: [
@@ -18,7 +20,9 @@ import { ContactFormComponent } from '../contact/components/contact-form/contact
     ],
     declarations: [
         TimelineComponent,
-        AddpostComponent
+        AddpostComponent,
+        PostComponent,
+        ListPostComponent
     ],
     exports: [
         TimelineComponent

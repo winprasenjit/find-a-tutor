@@ -10,7 +10,9 @@ export class GlobalConstant {
     public static TEXTAREA_ROW_SIZE = 10;
     public static ADD_POST_MODAL = {
         WIDTH:'1000px',
-        HEIGHT : '642px'
+        HEIGHT : 'auto'
     }
+    public static ADD_TASK = 'ADD_TASK';
+    public static REMOVE_TASK = 'REMOVE_TASK';
 
 }
