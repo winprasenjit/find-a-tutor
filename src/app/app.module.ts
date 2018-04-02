@@ -25,10 +25,14 @@ import { LoginComponent } from './modules/login/components/login.component';
 
 import { SharedService } from './shared/services/shared.service';
 
-import { AddTaskComponent } from './add-task/add-task.component';
-import { ListTaskComponent } from './list-task/list-task.component';
 import { IAppstate, rootReducer, INITIAL_STATE } from './shared/helper/store';
-
+import { TaskModule } from './modules/task/task.module';
+import { UserService } from './modules/user/services/user.service';
+import { TimelineModule } from './modules/timeline/timeline.module';
+import { AuthenticationService } from './shared/services/authentication.service';
+import { CommunicationService } from './shared/services/communication.service';
+import { AuthGuard } from './shared/helper/auth.guard';
+import { AlertService } from './shared/services/alert.service';
 
 @NgModule({
     declarations: [
@@ -38,8 +42,6 @@ import { IAppstate, rootReducer, INITIAL_STATE } from './shared/helper/store';
         SidebarComponent,
         DashboardComponent,
         RegistrationComponent,
-        AddTaskComponent,
-        ListTaskComponent,
         LoginComponent
     ],
     imports: [
@@ -53,12 +55,18 @@ import { IAppstate, rootReducer, INITIAL_STATE } from './shared/helper/store';
         SharedModule,
         AppMaterialModule,
         CategoryModule,
-        ContactModule
+        ContactModule,
+        TaskModule
+
     ],
     providers: [
+        SharedService,
+        AuthenticationService,
+        CommunicationService,
+        AuthGuard,
+        AlertService
     ],
-    bootstrap: [AppComponent],
-    entryComponents: [AddTaskComponent, ListTaskComponent]
+    bootstrap: [AppComponent]
 })
 export class AppModule {
     constructor(

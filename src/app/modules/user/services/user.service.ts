@@ -10,6 +10,7 @@ import { Column } from '../../../shared/models/column.model';
 @Injectable()
 export class UserService {
     private userAPI = ApiSettings.USER_API;
+
     constructor(private sharedService: SharedService) { }
 
     getColumns(): Observable<Column[]> {

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
-import { IAppstate } from '../shared/helper/store';
+import { IAppstate } from '../../../../shared/helper/store';
 
 @Component({
     selector: 'list-task',
@@ -19,7 +19,8 @@ export class ListTaskComponent implements OnInit {
     ngOnInit() {
         this.ngRedux
             .subscribe(()=>{
-                this.taskList = this.ngRedux.getState().taskList;
+                //this.taskList = this.ngRedux.getState().taskList;
+                console.dir(this.ngRedux.getState());
             });
     }
 }

@@ -14,5 +14,6 @@ export class GlobalConstant {
     }
     public static ADD_TASK = 'ADD_TASK';
     public static REMOVE_TASK = 'REMOVE_TASK';
-
+    public static ADD_IMAGE = 'ADD_IMAGE';
+    public static REMOVE_IMAGE = 'REMOVE_IMAGE';
 }

@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
-import { AddTaskComponent } from '../../add-task/add-task.component';
-import { ListTaskComponent } from '../../list-task/list-task.component';
 import { ImageUploaderComponent } from '../components/image-uploader/image-uploader.component';
+import { AddTaskComponent } from '../../modules/task/components/add-task/add-task.component';
+import { ListTaskComponent } from '../../modules/task/components/list-task/list-task.component';
 
 export class AddItem {
     classes = {

@@ -1,29 +1,20 @@
+import { tassign } from 'tassign';
+import { combineReducers } from "redux";
 import { GlobalConstant } from '../constants/global.constant';
+import { ITaskstate, TASK_INITIAL_STATE, taskingReducer } from '../../modules/task/helpers/task-store';
+import { IImagestate, IMAGE_INITIAL_STATE, imagingReducer } from '../components/image-uploader/helpers/image-store';
 
 export interface IAppstate {
-    taskList: any[];
+    tasking: ITaskstate;
+    imageing: IImagestate;
 }
 
 export const INITIAL_STATE: IAppstate = {
-    taskList: [],
+    tasking: TASK_INITIAL_STATE,
+    imageing: IMAGE_INITIAL_STATE
 };
 
-export function rootReducer(state: IAppstate, action) {
-    switch (action.type) {
-        case GlobalConstant.ADD_TASK:
-            let task = {
-                id: state.taskList.length + 1,
-                taskname: action.taskname
-            };
-            return Object.assign({}, state, {
-                taskList: state.taskList.concat(task)
-            });
-
-        case GlobalConstant.REMOVE_TASK:
-            return Object.assign({}, state, {
-                taskList: state.taskList.filter(t => t.taskname !== action.taskname)
-            });
-    }
-
-    return state;
-}
+export const rootReducer = combineReducers<IAppstate>({
+    tasking: taskingReducer,
+    imageing: imagingReducer
+});

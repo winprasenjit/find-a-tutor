@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUsers } from '../../../shared/interfaces/iUser';
+import { User } from '../../user/models/user.model';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
     selector: 'login',
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
+        private sharedService: SharedService,
         private communicationService: CommunicationService) { }
 
     ngOnInit() {
@@ -41,13 +44,14 @@ export class LoginComponent implements OnInit {
         this.authenticationService
             .login(value.username, value.password)
             .subscribe(
-            data => {
-                this.router.navigate([this.returnUrl]);
-                this.communicationService.setLoginType(true);
-            },
-            error => {
-                this.alertService.error(error._body);
-                // this.loading = false;
-            });
+                (data : User) => {
+                    this.router.navigate([this.returnUrl]);
+                    this.communicationService.setLoginType(true);
+                    this.sharedService.userInfo = data;
+                },
+                error => {
+                    this.alertService.error(error._body);
+                    // this.loading = false;
+                });
     }
 }

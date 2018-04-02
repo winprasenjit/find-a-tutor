@@ -10,6 +10,9 @@ import { Category } from '../../../category/models/category';
 import { CategoryService } from '../../../category/services/category.service';
 import { MobileNumberValidation } from '../../../../shared/validators/mobile-number.validator';
 import { AuthenticationService } from '../../../../shared/services/authentication.service';
+import { UserService } from '../../../user/services/user.service';
+import { SharedService } from '../../../../shared/services/shared.service';
+import { User } from '../../../user/models/user.model';
 
 @Component({
     selector: 'app-addpost',
@@ -32,6 +35,7 @@ export class AddpostComponent implements OnInit {
         private dialogRef: MatDialogRef<AddpostComponent>,
         private categoryService: CategoryService,
         private authService: AuthenticationService,
+        private sharedService : SharedService,
         private addPostService: PostService) {
     }
 
@@ -49,7 +53,6 @@ export class AddpostComponent implements OnInit {
     }
 
     onSubmit({ value, valid }: { value: Post, valid: boolean }): void {
-        console.dir(this.addPostForm);
         if (valid) {
             if (!this.isUpdate) {
                 this.saveUser(value);
@@ -79,10 +82,9 @@ export class AddpostComponent implements OnInit {
     }
 
     initContact() {
-        this.getContactData();
         return this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
-            mobile: ['', [Validators.required, MobileNumberValidation]],
+            email: [this.sharedService.userInfo.email, [Validators.required, Validators.email]],
+            mobile: [this.sharedService.userInfo.mobile, [Validators.required, MobileNumberValidation]],
             aboutu: []
         });
     }
@@ -92,11 +94,6 @@ export class AddpostComponent implements OnInit {
         const addrCtrl = this.initContact();
 
         control.push(addrCtrl);
-
-        /* //subscribe to individual address value changes
-        addrCtrl.valueChanges.subscribe(x => {
-            console.log(x);
-        })*/
     }
 
     getCategoryData(): void {
@@ -106,10 +103,4 @@ export class AddpostComponent implements OnInit {
                 this.subjectList = result;
             });
     }
-
-    getContactData() {
-        console.dir(this.authService.User);
-        return;
-    }
 }
-

@@ -34,7 +34,7 @@ import { ListPostComponent } from './components/list-post/list-post.component';
         AddpostComponent
     ],
     providers : [
-        PostService
+        PostService,
     ]
 })
 export class TimelineModule { }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgRedux } from 'ng2-redux';
-import { IAppstate } from '../shared/helper/store';
-import { GlobalConstant } from '../shared/constants/global.constant';
+import { NgRedux, select } from 'ng2-redux';
+import { IAppstate } from '../../../../shared/helper/store';
+import { GlobalConstant } from '../../../../shared/constants/global.constant';
 
 @Component({
     selector: 'add-task',
@@ -12,15 +12,15 @@ export class AddTaskComponent implements OnInit {
     @Input() data: any;
 
     taskname: string;
-    taskList: string[] = [];
+    @select() taskList;
 
     constructor(private ngRedux: NgRedux<IAppstate>) { }
 
     ngOnInit() {
-        this.ngRedux
+        /* this.ngRedux
             .subscribe(() => {
                 this.taskList = this.ngRedux.getState().taskList;
-            });
+            }); */
     }
 
     addTask(): void {

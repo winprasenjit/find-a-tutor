@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AddpostComponent } from './addpost/addpost.component';
 import { GlobalConstant } from '../../../shared/constants/global.constant';
+import { SharedService } from '../../../shared/services/shared.service';
 
 @Component({
     selector: 'app-timeline',
@@ -11,9 +12,10 @@ import { GlobalConstant } from '../../../shared/constants/global.constant';
 export class TimelineComponent implements OnInit {
     globalConst = GlobalConstant;
 
-    constructor(public dialog: MatDialog) { }
+    constructor(public dialog: MatDialog, private sharedService : SharedService) { }
 
     ngOnInit() {
+        console.log(this.sharedService.userInfo);
     }
 
     addPost(): void {

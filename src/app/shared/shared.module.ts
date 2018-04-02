@@ -48,11 +48,7 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
         ImageUploaderComponent
     ],
     providers: [
-        AuthenticationService,
-        CommunicationService,
-        SharedService,
-        AuthGuard,
-        AlertService
+
     ],
     entryComponents : [ImageUploaderComponent]
 })
