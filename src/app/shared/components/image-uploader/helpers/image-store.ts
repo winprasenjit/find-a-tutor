@@ -14,7 +14,7 @@ export function imagingReducer(state: IImagestate = IMAGE_INITIAL_STATE, action)
         case GlobalConstant.ADD_IMAGE:
             let image = {
                 id: state.imageList.length + 1,
-                taskname: action.taskname
+                imageUrl: action.imageUrl
             };
             return tassign(state, {
                 imageList: state.imageList.concat(image)

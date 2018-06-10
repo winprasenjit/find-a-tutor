@@ -12,15 +12,13 @@ export class ListTaskComponent implements OnInit {
 
     taskList: any[] = [];
 
-    constructor(private ngRedux :NgRedux<IAppstate>) {
-
-    }
+    constructor(private ngRedux :NgRedux<IAppstate>) {}
 
     ngOnInit() {
         this.ngRedux
             .subscribe(()=>{
-                //this.taskList = this.ngRedux.getState().taskList;
-                console.dir(this.ngRedux.getState());
+                this.taskList = this.ngRedux.getState().tasking.taskList;
+                //console.dir(this.ngRedux.getState());
             });
     }
 }

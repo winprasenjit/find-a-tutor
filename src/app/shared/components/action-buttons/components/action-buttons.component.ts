@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 
 @Component({
     selector: 'action-buttons',
@@ -6,18 +6,24 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     styleUrls: ['./action-buttons.component.css']
 })
 export class ActionButtonsComponent implements OnInit {
-
     isSelected: any;
+    hideCreateBtn = false;
 
     @Output('create') create = new EventEmitter();
     @Output('update') update = new EventEmitter();
     @Output('delete') delete = new EventEmitter();
 
-    constructor() { }
+    constructor() {
+    }
 
     @Input()
-    set disabledWhen(value: any){
+    set disabledWhen(value: any) {
         this.isSelected = value;
+    }
+
+    @Input('hide-create-button')
+    set hideCreateButton(value: boolean) {
+        this.hideCreateBtn = value;
     }
 
     ngOnInit() {
@@ -28,10 +34,10 @@ export class ActionButtonsComponent implements OnInit {
     }
 
     updateFn(): void {
-        this.update.emit();
+        this.update.emit({selection: this.isSelected});
     }
 
     deleteFn(): void {
-        this.delete.emit();
+        this.delete.emit({selection: this.isSelected});
     }
 }

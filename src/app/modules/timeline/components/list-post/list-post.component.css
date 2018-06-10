@@ -4,3 +4,10 @@
 .ng-star-inserted:last-child{
     margin-bottom: 0;
 }
+.post-container{
+    height: 475px;
+    overflow-y: auto;
+}
+.post-container .post-block{
+    margin-bottom: 15px;
+}

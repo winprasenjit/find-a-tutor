@@ -3,7 +3,7 @@
         <h4 md-dialog-title>{{globalConst.SUBMIT_FREE_ADD}}</h4>
     </div>
 
-    <div class="category-create-form panel-body">
+    <div class="post-create-form panel-body">
         <form (ngSubmit)="onSubmit(addPostForm)" [formGroup]="addPostForm" novalidate>
             <div class="row">
                 <div class="col-ld-12 col-md-12 col-sm-12 col-xs-12">
@@ -13,13 +13,13 @@
                 </div>
                 <div class="col-ld-12 col-md-12 col-sm-12 col-xs-12">
                     <mat-form-field class="category">
-                        <mat-select placeholder="{{globalConst.SUBJECT}}" formControlName="subject" multiple>
-                            <mat-option *ngFor="let subject of subjectList" [value]="subject.name">{{subject.name}}</mat-option>
+                        <mat-select placeholder="{{globalConst.SUBJECT}}" formControlName="category" multiple>
+                            <mat-option *ngFor="let subject of observebaleSubjects| async" [value]="subject.name">{{subject.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="col-ld-4 col-md-4 col-sm-12 col-xs-12">
-                    <image-uploader></image-uploader>
+                    <image-uploader [data]="imageConfig"></image-uploader>
                 </div>
                 <div class="col-ld-12 col-md-12 col-sm-12 col-xs-12">
                     <mat-form-field class="example-full-width">
@@ -37,14 +37,14 @@
                         <input type="text" matInput placeholder="{{globalConst.PRICE}}" formControlName="price">
                         <mat-error *ngIf="addPostForm.get('price').touched
                             && !addPostForm.get('price').errors?.pattern">
-                                Please insert valid phone number
+                                Please insert price
                         </mat-error>
                     </mat-input-container>
                 </div>
             </div>
             <div class="row submit-btn-container">
                 <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                    <button mat-raised-button [disabled]="!addPostForm.valid || !addPostForm.dirty"
+                    <button mat-raised-button [disabled]="!addPostForm.valid"
                         color="primary">{{globalConst.SUBMIT}}</button>
                 </div>
             </div>

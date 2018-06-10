@@ -18,6 +18,9 @@ export class SharedService {
     }
 
     get userInfo(): User {
+        if(!this._userInfo){
+            this._userInfo =  JSON.parse(localStorage.getItem('currentUser'));
+        }
         return this._userInfo;
     }
 

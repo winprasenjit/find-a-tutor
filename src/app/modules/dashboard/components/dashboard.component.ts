@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
             cellHeight: 80,
             verticalMargin: 10
         };
-        console.log(this.sharedService.userInfo);
+
         this.sharedService
             .get('/assets/json/dashboard.json')
             .map(response => response)

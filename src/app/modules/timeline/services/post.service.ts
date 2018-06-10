@@ -7,12 +7,25 @@ import { ApiSettings } from '../../../shared/constants/api.constant';
 @Injectable()
 export class PostService {
     private addPostAPI = ApiSettings.ADD_POST_API;
+    postCount : number;
+    postLoaded = false;
+
     constructor(private sharedService: SharedService) { }
 
-    getAllPost(): Observable<Post[]> {
+    getAllPost(skip : number, postCount:number): Observable<Post[]> {
         return this.sharedService
-            .get(this.addPostAPI)
+            .get(this.addPostAPI,{
+                skip : skip,
+                count:postCount,
+                user : this.sharedService.userInfo.username
+            })
             .map((result: any) => result as Post[]);
+    }
+
+    getPost(id:string): Observable<Post> {
+        return this.sharedService
+            .get(this.addPostAPI+'/'+id)
+            .map((result: any) => result as Post);
     }
 
     createPost(formData: Post): Observable<Post> {
@@ -27,10 +40,10 @@ export class PostService {
             .map((result: any) => result as Post);
     }
 
-    deletePost(name): Observable<String> {
+    deletePost(post:Post): Observable<Post> {
         return this.sharedService
-            .delete(this.addPostAPI, { name: name })
-            .map((result: any) => result as string);
+            .delete(this.addPostAPI, { id: post._id})
+            .map((result: any) => result as Post);
     }
 
 }

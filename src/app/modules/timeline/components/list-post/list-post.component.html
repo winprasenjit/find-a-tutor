@@ -3,9 +3,9 @@
         <h2 md-dialog-title>Posts</h2>
     </div>
 
-    <div class="post-container panel-body">
-        <div class="col-ld-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let post of posts">
-            <post [content]="post"></post>
+    <div class="post-container panel-body" scroller (scrollReached)="scrollReached($event)">
+        <div class="col-ld-12 col-md-12 col-sm-12 col-xs-12 post-block" *ngFor="let post of posts | async" >
+            <post [content]="post" #postList></post>
         </div>
     </div>
 </div>

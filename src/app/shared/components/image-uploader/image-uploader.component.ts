@@ -1,5 +1,8 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { NgRedux, select } from "ng2-redux";
+import { IImagestate } from './helpers/image-store';
+import { GlobalConstant } from '../../constants/global.constant';
 
 @Component({
     selector: 'image-uploader',
@@ -9,7 +12,7 @@ import { Http, Response } from '@angular/http';
 export class ImageUploaderComponent implements OnInit {
     @Input() data: any;
 
-    constructor(private http: Http, private el: ElementRef) {
+    constructor(private http: Http, private el: ElementRef, private ngRedux : NgRedux<IImagestate>) {
         this.data = this.data || {};
     }
 
@@ -21,14 +24,17 @@ export class ImageUploaderComponent implements OnInit {
         const fileCount: number = inputEl.files.length;
         const formData = new FormData();
         if (fileCount > 0) { // a file was selected
-            formData.append('photo', inputEl.files.item(0));
             formData.append('target', this.data.folder);
+            formData.append('photo', inputEl.files.item(0));
             this.http
                 .post(this.data.url, formData)
                 .map((res: Response) => res.json())
                 .subscribe(
                     (response) => {
-                        console.dir(response.filePath);
+                        this.ngRedux.dispatch({
+                            type : GlobalConstant.ADD_IMAGE,
+                            imageUrl : response.filePath
+                        })
                     },
                     (error) => console.log(error))
         }

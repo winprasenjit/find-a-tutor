@@ -10,6 +10,7 @@ import { ContactModule } from '../contact/contact.module';
 import { ContactFormComponent } from '../contact/components/contact-form/contact-form.component';
 import { PostComponent } from './components/post/post.component';
 import { ListPostComponent } from './components/list-post/list-post.component';
+import { ViewPostComponent } from './components/view-post/view-post.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { ListPostComponent } from './components/list-post/list-post.component';
         TimelineComponent,
         AddpostComponent,
         PostComponent,
-        ListPostComponent
+        ListPostComponent,
+        ViewPostComponent
     ],
     exports: [
         TimelineComponent

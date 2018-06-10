@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormsModule, FormGroup, FormControlName, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgRedux } from 'ng2-redux';
 import * as _ from 'lodash';
 
 import { PostService } from '../../services/post.service';
@@ -13,6 +15,12 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 import { UserService } from '../../../user/services/user.service';
 import { SharedService } from '../../../../shared/services/shared.service';
 import { User } from '../../../user/models/user.model';
+import { ApiSettings } from '../../../../shared/constants/api.constant';
+import { IImagestate } from '../../../../shared/components/image-uploader/helpers/image-store';
+import { AlertService } from '../../../../shared/services/alert.service';
+import { Observable } from 'rxjs/Observable';
+import { IPoststate } from '../../helpers/post.store';
+import { ADD_POST, UPDATE_POST } from '../../helpers/post.constant';
 
 @Component({
     selector: 'app-addpost',
@@ -24,61 +32,54 @@ import { User } from '../../../user/models/user.model';
     styleUrls: ['./addpost.component.css']
 })
 export class AddpostComponent implements OnInit {
+    post: Post;
+    postId: string;
+    addPostForm: FormGroup;
     globalConst = GlobalConstant;
     isUpdate = false;
-    addPostForm: FormGroup;
     submitted = false;
-    subjectList: Category[] = [];
+    imageConfig = {
+        url: ApiSettings.USER_IMAGE_UPLOAD_URL,
+        folder: 'post'
+    }
+    observebaleSubjects: Observable<Category[]>;
+    uploadedUrl: string;
 
     constructor(@Inject(MAT_DIALOG_DATA) private data: any,
+        private alertService: AlertService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private ngRedux: NgRedux<IImagestate>,
+        private ngReduxPost: NgRedux<IPoststate>,
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<AddpostComponent>,
         private categoryService: CategoryService,
         private authService: AuthenticationService,
-        private sharedService : SharedService,
+        private sharedService: SharedService,
         private addPostService: PostService) {
     }
 
     ngOnInit(): void {
         this.getCategoryData();
+        this.postId = this.route.snapshot.params.id;
+        if (this.postId) {
+            this.getPost(this.postId);
+        }
         this.isUpdate = (_.isEmpty(this.data)) ? false : true;
         this.addPostForm = this.fb.group({
             title: [(this.data) ? this.data.title : '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-            subject: ['', [Validators.required]],
+            category: ['', [Validators.required]],
             description: ['', [Validators.required]],
             contact: this.fb.array([]),
-            price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+            price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]]
         });
         this.addContact();
-    }
-
-    onSubmit({ value, valid }: { value: Post, valid: boolean }): void {
-        if (valid) {
-            if (!this.isUpdate) {
-                this.saveUser(value);
-            } else {
-                this.updateUser(value);
-            }
-        }
-    }
-
-    saveUser(value: Post): void {
-        this.addPostService
-            .createPost(value)
-            .subscribe((result: Post) => {
-                this.dialogRef.close(result);
+        this.ngRedux
+            .subscribe(() => {
+                const imageList = this.ngRedux.getState()['imageing']['imageList'];
+                this.uploadedUrl = (imageList.slice(-1).pop()) ? imageList.slice(-1).pop()['imageUrl'] : '';
             });
-    }
 
-    updateUser(value: Post): void {
-        Object.assign(this.data, value);
-        this.addPostService
-            .updatePost(this.data)
-            .subscribe((result: Post) => {
-                if (this.dialogRef) {
-                    this.dialogRef.close(result);
-                }
-            });
     }
 
     initContact() {
@@ -96,11 +97,65 @@ export class AddpostComponent implements OnInit {
         control.push(addrCtrl);
     }
 
-    getCategoryData(): void {
-        this.categoryService
-            .getAllCategory()
-            .subscribe((result: Category[]) => {
-                this.subjectList = result;
+    onSubmit({ value, valid }: { value: Post, valid: boolean }): void {
+        if (valid) {
+            if (this.uploadedUrl) {
+                value.image = this.uploadedUrl;
+            }
+            if (!this.isUpdate) {
+                this.createPost(value);
+            } else {
+                value._id = this.post._id;
+                this.updateUser(value);
+            }
+        }
+    }
+
+    createPost(value: Post): void {
+        this.addPostService
+            .createPost(value)
+            .subscribe((result: Post) => {
+                this.addPostService.postLoaded = true;
+                this.router.navigate(['timeline/lists']);
+                this.ngReduxPost.dispatch(Object.assign({ type: ADD_POST }, result));
+                this.addPostService.postCount++;
+                this.alertService.success('Post has been successfully created');
             });
+    }
+
+    updateUser(value: Post): void {
+        Object.assign(this.data, value);
+        this.addPostService
+            .updatePost(this.data)
+            .subscribe((result: Post) => {
+                this.router.navigate(['timeline/lists']);
+                this.ngReduxPost.dispatch(Object.assign({ type: UPDATE_POST }, result));
+                this.alertService.success('Post has been successfully updated');
+            });
+    }
+
+    getPost(postId: string): void {
+        this.addPostService
+            .getPost(postId)
+            .subscribe((result: Post) => {
+                this.isUpdate = true;
+                this.post = result;
+                this.addPostForm.patchValue({
+                    title: this.post.title,
+                    category: this.post.category,
+                    description: this.post.description,
+                    image : this.post.image,
+                    price : this.post.price,
+                    contact: [{
+                        email : this.post.contact[0].email,
+                        //mobile : this.post.contact[0].mobile,
+                        aboutu : this.post.contact[0].aboutu,
+                    }]
+                })
+            });
+    }
+
+    getCategoryData(): void {
+        this.observebaleSubjects = this.categoryService.getAllCategory();
     }
 }

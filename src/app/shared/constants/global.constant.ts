@@ -5,7 +5,7 @@ export class GlobalConstant {
     public static SUBMIT_FREE_ADD  = 'Submit a Free Classified Ad';
     public static TITLE = 'TITLE';
     public static SUBJECT = 'Subject';
-    public static PRICE = 'Price';
+    public static PRICE = 'Price (Rs)';
     public static DETAIL_DESC = 'Include detail description';
     public static TEXTAREA_ROW_SIZE = 10;
     public static ADD_POST_MODAL = {

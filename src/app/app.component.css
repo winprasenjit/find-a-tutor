@@ -1,0 +1,8 @@
+.navbar.navbar-default.navbar-static-top{
+    position: fixed;
+    top: 0;
+    width:100%;
+}
+#page-wrapper{
+    margin-top: 40px;
+}

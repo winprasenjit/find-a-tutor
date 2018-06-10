@@ -1,0 +1,78 @@
+<div class="panel panel-default">
+    <div class="post-container panel-body">
+        <div class="row">
+            <div class="col-ld-9 col-md-9 col-sm-12 col-xs-12 post-details-left">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 post-title">
+                    <header>
+                        <h2 class="main-title">{{post.title}}</h2>
+                    </header>
+                    <section class="post-card-divider-sm">
+                        <ol class="post-sands-category">
+                            <li class="m-0-bottom" *ngFor="let category of post.category">
+                                <a href="#" class="category">
+                                    {{category}}
+                                </a>
+                            </li>
+                        </ol>
+                        <div class="m-md-top nowrap text-muted">
+                            Posted
+                            <span itemprop="datePosted"
+                                  data-eo-popover-html-unsafe="<div class='text-center'>June 8, 2018</div>"
+                                  data-eo-popover-close="false" data-eo-popover-trigger="mouseenter"
+                                  data-eo-popover-size="sm"
+                                  data-eo-popover-placement="bottom" eo-popover-id="17">
+                                19 hours ago
+                            </span>
+                        </div>
+                    </section>
+                    <section class="post-card-divider-sm">
+                      <p>{{post.description}}</p>
+                    </section>
+                    <section class="post-card-divider-sm price-section">
+                        Price : <span>{{post.price}}</span>
+                    </section>
+                    <section class="post-card-divider-sm files">
+                        <a href="{{post.image}}" class="category">
+                            Download
+                        </a>
+                    </section>
+                </div>
+            </div>
+            <div class="col-ld-3 col-md-3 col-sm-12 col-xs-12 post-details-right" set-auto-height>
+                <aside class="sidebar-actions">
+                    <div class="sidebar-action-container">
+                        <section>
+                            <div>
+                                <div class="row buttons">
+                                    <div class="primary col-lg-12 col-sm-6 col-xs-6">
+                                        <button mat-raised-button color="primary" class="btn">Submit A Proposal</button>
+                                    </div>
+                                    <div class="secondary saveJobLinkContainer col-lg-12 col-sm-6 col-xs-6">
+                                        <button mat-raised-button color="primary" class="btn">Save for later</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </aside>
+                <aside class="sidebar-actions">
+                    <div class="sidebar-action-contact">
+                        <strong>About the Client</strong>
+                        <ul class="list-unstyled" *ngFor="let contact of post.contact">
+                            <li>{{contact.aboutu}}</li>
+                            <li>
+                                <strong>Email :</strong>
+                                <span>{{contact.email}}</span>
+                            </li>
+                            <li>
+                                <strong>Mobile :</strong>
+                                <span>{{contact.mobile}}</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
