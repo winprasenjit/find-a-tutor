@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-import { SharedService } from '../../../shared/services/shared.service';
-import { User } from '../models/user.model';
-import { ApiSettings } from '../../../shared/constants/api.constant';
-import { Column } from '../../../shared/models/column.model';
+import {SharedService} from '../../../shared/services/shared.service';
+import {User} from '../models/user.model';
+import {ApiSettings} from '../../../shared/constants/api.constant';
+import {Column} from '../../../shared/models/column.model';
 
 @Injectable()
 export class UserService {
     private userAPI = ApiSettings.USER_API;
+    selectedUser: User;
 
-    constructor(private sharedService: SharedService) { }
+    constructor(private sharedService: SharedService) {
+    }
 
     getColumns(): Observable<Column[]> {
         return this.sharedService
@@ -23,6 +25,12 @@ export class UserService {
         return this.sharedService
             .get(this.userAPI)
             .map((result: any) => result as User[]);
+    }
+
+    getUser(id): Observable<User> {
+        return this.sharedService
+            .get(this.userAPI + '/' + id)
+            .map((result: any) => result as User);
     }
 
     createUser(formData: User): Observable<User> {
@@ -39,7 +47,7 @@ export class UserService {
 
     deleteUser(username): Observable<String> {
         return this.sharedService
-            .delete(this.userAPI, { username: username })
+            .delete(this.userAPI, {username: username})
             .map((result: any) => result as string);
     }
 }

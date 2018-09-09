@@ -10,4 +10,6 @@ export class ApiSettings {
     public static CATEGORY_API = ApiSettings.API_ENDPOINT + 'category';
 
     public static ADD_POST_API = ApiSettings.API_ENDPOINT + 'posts';
+    
+    public static REPLY_POST_API = ApiSettings.API_ENDPOINT + 'comments';
 }

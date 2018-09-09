@@ -19,6 +19,7 @@ import {CommunicationService} from 'app/shared/services/communication.service';
 import {ImageUploaderComponent} from './components/image-uploader/image-uploader.component';
 import {ScrollerDirective} from './directives/scroller.directive';
 import {SetAutoHeightDirective} from "./directives/set-auto-height.directive";
+import {SafeHtmlPipe} from "./pipes/safe-html";
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import {SetAutoHeightDirective} from "./directives/set-auto-height.directive";
         EqualValidatorDirective,
         SortPipe,
         FilterArrayPipe,
+        SafeHtmlPipe,
         ImageUploaderComponent,
         ScrollerDirective,
         SetAutoHeightDirective
@@ -49,6 +51,7 @@ import {SetAutoHeightDirective} from "./directives/set-auto-height.directive";
         EqualValidatorDirective,
         SortPipe,
         FilterArrayPipe,
+        SafeHtmlPipe,
         ImageUploaderComponent,
         ScrollerDirective,
         SetAutoHeightDirective

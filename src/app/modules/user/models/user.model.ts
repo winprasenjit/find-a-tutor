@@ -1,5 +1,5 @@
-import { IUsers } from '../../../shared/interfaces/iUser';
-import { IContact } from '../../../shared/interfaces/iContact';
+import {IUsers} from '../../../shared/interfaces/iUser';
+import {IContact} from '../../../shared/interfaces/iContact';
 const enum rating {
     communication = 5,
     attitude = 5,
@@ -13,7 +13,7 @@ export class User {
     lastname: string;
     username: string;
     password: string;
-    contact : IContact[];
+    contact: IContact[];
     subject?: Array<string>;
     sex?: { 'Male', 'Female' };
     rating?: {
@@ -21,9 +21,10 @@ export class User {
         attitude: 5,
         sense: 5
     };
+    avgRating?: number;
     confirmPassword?: any;
-    email ? : string;
-    mobile? : string;
+    email ?: string;
+    mobile?: string;
 
     constructor(userObj: IUsers) {
         // Check enum
@@ -40,5 +41,16 @@ export class User {
 
     createFullName(): void {
         this.name = `${this.firstname} ${this.lastname}`;
+    }
+
+    createRating() {
+        const count = Object.keys(this.rating).length;
+        let totalRating = 0;
+        for (const i in this.rating) {
+            if (this.rating.hasOwnProperty(i)) {
+                totalRating += this.rating[i];
+            }
+        }
+        this.avgRating = Math.round(totalRating / count);
     }
 }

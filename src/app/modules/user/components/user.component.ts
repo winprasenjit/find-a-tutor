@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import {Component, OnInit, SecurityContext, ViewChild} from '@angular/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { MatDialog } from '@angular/material';
+import {MatDialog} from '@angular/material';
 
-import { User } from '../models/user.model';
-import { UserService } from '../services/user.service';
-import { Column } from '../../../shared/models/column.model';
-import { UserFormComponent } from './user-form/user-form.component';
-import { GridComponent } from '../../../shared/components/grid/components/grid.component';
+import {User} from '../models/user.model';
+import {UserService} from '../services/user.service';
+import {Column} from '../../../shared/models/column.model';
+import {UserFormComponent} from './user-form/user-form.component';
+import {GridComponent} from '../../../shared/components/grid/components/grid.component';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'user',
@@ -23,7 +25,11 @@ export class UserComponent implements OnInit {
 
     @ViewChild(GridComponent) gridComponent: GridComponent;
 
-    constructor(private userService: UserService, public dialog: MatDialog) { }
+    constructor(private userService: UserService,
+                private sanitizer: DomSanitizer,
+                private  router: Router,
+                public dialog: MatDialog) {
+    }
 
     ngOnInit(): void {
         this.getUserColumn();
@@ -31,13 +37,19 @@ export class UserComponent implements OnInit {
     }
 
     getUserColumn(): void {
+        const self = this;
         this.userService
             .getColumns()
             .subscribe((data: Column[]) => {
                 data[0]['callBack'] = function (row: User): string {
                     if (row) {
-                        return row.firstname + ' ' + row.lastname;
+                        const htmlString = '<a href=\"javascript:void(0)\" >' + row.firstname + ' ' + row.lastname + '</a>';
+                        return htmlString;
                     }
+                }
+                data[0]['onClick'] = function (item: User, column, r, c) {
+                    self.userService.selectedUser = item;
+                    self.router.navigate(['/user/view-user', item._id]);
                 }
                 data[5]['callBack'] = function (row: User): number {
                     if (row && row.rating) {

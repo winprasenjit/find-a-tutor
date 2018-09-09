@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {User} from '../../models/user.model';
+import {UserService} from '../../services/user.service';
+import {CategoryService} from '../../../category/services/category.service';
+import {Category} from '../../../category/models/category';
 
 @Component({
     selector: 'app-user-form',
@@ -11,13 +13,17 @@ import { UserService } from '../../services/user.service';
 export class UserFormComponent implements OnInit {
     isUpdate = false;
     user: User;
+    subjectList : Category[] = [];
     submitted = false;
 
-    constructor( @Inject(MAT_DIALOG_DATA) public data: any,
-        public dialogRef: MatDialogRef<UserFormComponent>,
-        private userService: UserService) { }
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+                public dialogRef: MatDialogRef<UserFormComponent>,
+                private categoryService: CategoryService,
+                private userService: UserService) {
+    }
 
     ngOnInit(): void {
+        this.getCategoryData();
         if (!this.data) {
             this.user = new User(<User>{})
             return;
@@ -27,6 +33,7 @@ export class UserFormComponent implements OnInit {
     }
 
     onSubmit(form): void {
+        this.user.subject = form.subject;
         this.user.createFullName();
         if (!this.isUpdate) {
             this.saveUser();
@@ -54,5 +61,13 @@ export class UserFormComponent implements OnInit {
 
     getSliderVal(event, type): void {
         this.user.rating[type] = event.value;
+    }
+
+    getCategoryData(): void {
+        this.categoryService
+            .getAllCategory()
+            .subscribe((result: Category[]) => {
+                this.subjectList = result;
+            });
     }
 }

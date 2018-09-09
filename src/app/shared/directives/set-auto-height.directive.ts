@@ -12,9 +12,12 @@ export class SetAutoHeightDirective implements AfterViewInit {
     constructor(private el: ElementRef) {
     }
 
-    ngAfterViewInit() {
-        this.el.nativeElement.style.height
-            = this.el.nativeElement.parentElement.offsetHeight + 'px';
-        console.dir('set');
+    ngAfterViewInit(): void {
+        this.setDomHeight();
+    }
+
+    setDomHeight():void{
+        setTimeout(()=>this.el.nativeElement.style.height
+            = this.el.nativeElement.parentElement.offsetHeight + 'px');
     }
 }

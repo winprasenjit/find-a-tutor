@@ -7,11 +7,13 @@ import { UserComponent } from './components/user.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserService } from './services/user.service';
 import { ContactModule } from '../contact/contact.module';
+import { ViewUserComponent } from './components/view-user/view-user.component';
 
 @NgModule({
     declarations: [
         UserComponent,
-        UserFormComponent
+        UserFormComponent,
+        ViewUserComponent
     ],
     imports: [
         CommonModule,

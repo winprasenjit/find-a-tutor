@@ -15,7 +15,7 @@ export class CategoryFormComponent implements OnInit {
     isUpdate = false;
     categoryForm: FormGroup;
     submitted = false;
-
+    
     constructor( @Inject(MAT_DIALOG_DATA) private data: any,
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CategoryFormComponent>,

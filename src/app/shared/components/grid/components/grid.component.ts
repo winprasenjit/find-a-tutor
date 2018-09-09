@@ -1,8 +1,8 @@
-import { SortPipe } from '../../../pipes/order-by';
-import { FilterArrayPipe } from '../../../pipes/filter-array-pipe';
-import { Column } from '../../../models/column.model';
-import { Component, OnInit, Input, Output, EventEmitter, Pipe } from '@angular/core';
-import { PageEvent } from '@angular/material';
+import {SortPipe} from '../../../pipes/order-by';
+import {FilterArrayPipe} from '../../../pipes/filter-array-pipe';
+import {Column} from '../../../models/column.model';
+import {Component, OnInit, Input, Output, EventEmitter, Pipe} from '@angular/core';
+import {PageEvent} from '@angular/material';
 
 import * as _ from 'lodash';
 declare var $: any; // JQuery
@@ -34,7 +34,8 @@ export class GridComponent implements OnInit {
     @Output()
     private gridEvent: any = new EventEmitter();
 
-    constructor() { }
+    constructor() {
+    }
 
     @Input('column-list')
     set columnList(value) {
@@ -51,20 +52,8 @@ export class GridComponent implements OnInit {
         }
     }
 
-    //#region no longer required
-    /* get page(): number {
-        return this._page;
+    ngOnInit(): void {
     }
-
-    set page(page) {
-        this._page = page;
-        if (this.data && this.data.length > 0) {
-            this.setPage(page);
-        }
-    } */
-    //#endregion
-
-    ngOnInit(): void { }
 
     createDataOutput(): void {
         for (let i = 0; i < this.dataList.length; i++) {
@@ -82,7 +71,7 @@ export class GridComponent implements OnInit {
 
         setTimeout(() => {
             $('.custom-bootstrap-table').jsdragtable();
-            $('.custom-bootstrap-table').colResizable({ resizeMode: 'flex' });
+            $('.custom-bootstrap-table').colResizable({resizeMode: 'flex'});
         });
     }
 
@@ -153,7 +142,9 @@ export class GridComponent implements OnInit {
         row.guid = this.data[index].guid;
         dataObj = this.createCellTemplate(row);
         this.data[index] = dataObj;
-        index = _.findIndex(this.dataList, function (obj) { return obj.guid === dataObj.guid });
+        index = _.findIndex(this.dataList, function (obj) {
+            return obj.guid === dataObj.guid
+        });
         this.dataList[index] = dataObj;
         this.setPage(this.pageEvent);
     }
@@ -192,5 +183,19 @@ export class GridComponent implements OnInit {
         };
         this.setPage(this.pageEvent);
 
+    }
+
+    bindColumn(event, column, row, rowNumber, columnNumber) {
+        const item = Object.assign({}, _.find(this.dataList, ['guid', row.guid]));
+        for (const key in item) {
+            if (typeof item[key] === 'string') {
+                item[key] = item[key].replace(/<\/?[^>]+(>|$)/g, '')
+            }
+        }
+        if (column.onClick) {
+            event.preventDefault();
+            event.stopPropagation();
+            column.onClick(item, column, rowNumber, columnNumber);
+        }
     }
 }

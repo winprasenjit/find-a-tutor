@@ -4,8 +4,7 @@
             <img class="example-header-image" src="{{imageUrl}}" alt="Avatar">
         </div>
         <mat-card-title>
-            <a *ngIf="post.editable" [routerLink]="['/timeline/update', post._id]">{{post.title}}</a>
-            <a *ngIf="!post.editable" [routerLink]="['/timeline/view', post._id]">{{post.title}}</a>
+            <a [routerLink]="['/timeline/view', post._id]">{{post.title}}</a>
         </mat-card-title>
         <mat-card-subtitle>
             <span *ngFor="let categoryName of post.category">{{categoryName}}, </span>
@@ -17,7 +16,7 @@
         </p>
         <div class="price">Price : {{post.price}}</div>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="post.editable">
         <action-buttons 
             (update) = "updatePost($event)"
             (delete)="deletePost($event)"
