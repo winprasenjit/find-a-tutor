@@ -1,0 +1,20 @@
+<mat-card class="comment">
+    <mat-card-header>
+        <!--<div mat-card-avatar >-->
+            <!--<img class="example-header-image" src="{{imageUrl}}" alt="Avatar">-->
+        <!--</div>-->
+        <mat-card-title>
+            <a [routerLink]="['/user/view-user/',bid.user._id]">{{fullName(bid)}}</a>
+        </mat-card-title>
+        <mat-card-subtitle>
+            Posted 13 hours ago
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p class="description">
+            {{bid.coverLetter}}
+        </p>
+        <div class="price">Price : {{bid.revisedPrice}}</div>
+    </mat-card-content>
+</mat-card>
+
