@@ -12,6 +12,7 @@ import { ApiSettings } from '../../shared/constants/api.constant';
 import { Category } from '../category/models/category';
 import { CategoryService } from '../category/services/category.service';
 import { IUsers } from '../../shared/interfaces/iUser';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-registration',
@@ -109,7 +110,7 @@ export class RegistrationComponent implements OnInit {
                 // post the form data to the url defined above and map the response.
                 // Then subscribe //to initiate the post. if you don't subscribe, angular wont post.
                 .post(this.uploadUrl, formData)
-                .map((res: Response) => res.json())
+                .pipe(map((res: Response) => res.json()))
                 .subscribe(
                     // map the success function and alert the response
                     (response) => {

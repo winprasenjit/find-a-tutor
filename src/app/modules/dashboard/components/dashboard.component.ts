@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChildren, ViewContainerRef, QueryList, Component
 import { SharedService } from '../../../shared/services/shared.service';
 import { AddItem } from '../../../shared/helper/ad-item';
 import { IComponent } from '../../../shared/interfaces/iComponent';
+import { map } from 'rxjs/operators';
 
 declare var jQuery: any;
 
@@ -26,7 +27,7 @@ export class DashboardComponent implements OnInit {
 
         this.sharedService
             .get('/assets/json/dashboard.json')
-            .map(response => response)
+            .pipe(map(response => response))
             .subscribe(data => {
                 this.panels = data;
                 setTimeout(() => {

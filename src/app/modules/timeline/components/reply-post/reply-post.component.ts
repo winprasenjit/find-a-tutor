@@ -6,7 +6,7 @@ import {SharedService} from "../../../../shared/services/shared.service";
 import {MobileNumberValidation} from "../../../../shared/validators/mobile-number.validator";
 import {ReplyPost} from "../../models/ReplyPost";
 import {ReplyPostService} from "../../services/reply-post.service";
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 import {IReplyPostState} from "../../helpers/reply-post.store";
 import {ADD_REPLY} from "../../helpers/reply-post.constant";
 

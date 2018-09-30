@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormsModule, FormGroup, FormControlName, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgRedux } from 'ng2-redux';
+import { NgRedux } from '@angular-redux/store';
 import * as _ from 'lodash';
 
 import { PostService } from '../../services/post.service';
@@ -11,14 +11,11 @@ import { GlobalConstant } from '../../../../shared/constants/global.constant';
 import { Category } from '../../../category/models/category';
 import { CategoryService } from '../../../category/services/category.service';
 import { MobileNumberValidation } from '../../../../shared/validators/mobile-number.validator';
-import { AuthenticationService } from '../../../../shared/services/authentication.service';
-import { UserService } from '../../../user/services/user.service';
 import { SharedService } from '../../../../shared/services/shared.service';
-import { User } from '../../../user/models/user.model';
 import { ApiSettings } from '../../../../shared/constants/api.constant';
 import { IImagestate } from '../../../../shared/components/image-uploader/helpers/image-store';
 import { AlertService } from '../../../../shared/services/alert.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { IPoststate } from '../../helpers/post.store';
 import { ADD_POST, UPDATE_POST } from '../../helpers/post.constant';
 
@@ -52,9 +49,7 @@ export class AddpostComponent implements OnInit {
         private ngRedux: NgRedux<IImagestate>,
         private ngReduxPost: NgRedux<IPoststate>,
         private fb: FormBuilder,
-        private dialogRef: MatDialogRef<AddpostComponent>,
         private categoryService: CategoryService,
-        private authService: AuthenticationService,
         private sharedService: SharedService,
         private addPostService: PostService) {
     }
@@ -144,12 +139,12 @@ export class AddpostComponent implements OnInit {
                     title: this.post.title,
                     category: this.post.category,
                     description: this.post.description,
-                    image : this.post.image,
-                    price : this.post.price,
+                    image: this.post.image,
+                    price: this.post.price,
                     contact: [{
-                        email : this.post.contact[0].email,
+                        email: this.post.contact[0].email,
                         //mobile : this.post.contact[0].mobile,
-                        aboutu : this.post.contact[0].aboutu,
+                        aboutu: this.post.contact[0].aboutu,
                     }]
                 })
             });

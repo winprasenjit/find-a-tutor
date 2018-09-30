@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgRedux, select } from 'ng2-redux';
+import { NgRedux, select } from '@angular-redux/store';
 import { IAppstate } from '../../../../shared/helper/store';
 import { GlobalConstant } from '../../../../shared/constants/global.constant';
 

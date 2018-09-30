@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { NgRedux, select } from "ng2-redux";
+import { NgRedux, select } from "@angular-redux/store";
 import { IImagestate } from './helpers/image-store';
 import { GlobalConstant } from '../../constants/global.constant';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'image-uploader',
@@ -28,7 +29,7 @@ export class ImageUploaderComponent implements OnInit {
             formData.append('photo', inputEl.files.item(0));
             this.http
                 .post(this.data.url, formData)
-                .map((res: Response) => res.json())
+                .pipe(map((res: Response) => res.json()))
                 .subscribe(
                     (response) => {
                         this.ngRedux.dispatch({

@@ -3,9 +3,9 @@
     <form (ngSubmit)="onSubmit(userForm.value)" #userForm="ngForm" novalidate>
         <div class="row">
             <div class="col-ld-12 col-md-6 col-sm-12 col-xs-12">
-                <mat-input-container>
+                <mat-form-field>
                     <input type="text" matInput placeholder="Username" name="username" required minlength="4" maxlength="24" [(ngModel)]="user.username" #username="ngModel">
-                </mat-input-container>
+                </mat-form-field>
                 <div *ngIf="username.errors && (username.dirty || username.touched)" class="alert alert-danger">
                     <div [hidden]="!username.errors.required">
                         Username is required

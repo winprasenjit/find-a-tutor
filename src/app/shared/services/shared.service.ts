@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import {Injectable} from '@angular/core';
+import {Http, Response, URLSearchParams, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/catch';
-import { User } from '../../modules/user/models/user.model';
+import {User} from '../../modules/user/models/user.model';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SharedService {
@@ -13,13 +12,13 @@ export class SharedService {
     private options: RequestOptions;
 
     constructor(private http: Http) {
-        this.headers = new Headers({ 'Content-Type': 'application/json' });
-        this.options = new RequestOptions({ headers: this.headers });
+        this.headers = new Headers({'Content-Type': 'application/json'});
+        this.options = new RequestOptions({headers: this.headers});
     }
 
     get userInfo(): User {
-        if(!this._userInfo){
-            this._userInfo =  JSON.parse(localStorage.getItem('currentUser'));
+        if (!this._userInfo) {
+            this._userInfo = JSON.parse(localStorage.getItem('currentUser'));
         }
         return this._userInfo;
     }
@@ -39,11 +38,11 @@ export class SharedService {
                 params.set(x, formData[x]);
             }
         }
-        this.options = new RequestOptions({ headers: this.headers, search: params });
+        this.options = new RequestOptions({headers: this.headers, search: params});
 
         return this.http
             .get(url, this.options)
-            .map(response => response.json());
+            .pipe(map(response => response.json()));
     }
 
     post(url: string, formData?: any): Observable<Response> {
@@ -54,7 +53,7 @@ export class SharedService {
 
         return this.http
             .post(url, JSON.stringify(formData), this.options)
-            .map(response => response.json());
+            .pipe(map(response => response.json()));
     }
 
     put(url: string, formData?: any): Observable<Response> {
@@ -65,7 +64,7 @@ export class SharedService {
 
         return this.http
             .put(url, JSON.stringify(formData), this.options)
-            .map(response => response.json());
+            .pipe(map(response => response.json()));
     }
 
     delete(url: string, formData?: any): Observable<Response> {
@@ -79,6 +78,6 @@ export class SharedService {
                 headers: this.headers,
                 body: JSON.stringify(formData)
             }))
-            .map(response => response.json());
+            .pipe(map(response => response.json()));
     }
 }

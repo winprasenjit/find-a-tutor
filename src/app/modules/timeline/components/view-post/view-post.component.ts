@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 import {DISPLAY_POST} from "../../helpers/post.constant";
 import {Post} from "../../models/post";
 import {ActivatedRoute} from "@angular/router";

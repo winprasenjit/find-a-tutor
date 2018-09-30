@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChildren, ViewChild, QueryList, ElementRef } from '@angular/core';
-import "rxjs/add/operator/takeWhile";
-
 import { PostService } from '../../services/post.service';
 import { Post } from '../../models/post';
-import { NgRedux, select } from 'ng2-redux';
+import { NgRedux, select } from '@angular-redux/store';
 import { IPoststate } from '../../helpers/post.store';
 import { ADD_POST } from '../../helpers/post.constant';
 import { ActivatedRoute } from '@angular/router';
+import { takeWhile } from 'rxjs/operators';
 
 export function getAllPosts(state) {
     return state.posting.postList;
@@ -49,7 +48,7 @@ export class ListPostComponent implements OnInit, OnDestroy {
         if (!this.postService.postLoaded) {
             this.postService
                 .getAllPost(this.postService.postCount, this.initPostCount)
-                .takeWhile(() => this.alive)
+                .pipe(takeWhile(() => this.alive))
                 .subscribe((data: Post[]) => {
                     this.postService.postLoaded = true;
                     for (let i = 0; i < data.length; i++) {

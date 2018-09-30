@@ -1,6 +1,5 @@
 import {Component, OnInit, SecurityContext, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {MatDialog} from '@angular/material';
 

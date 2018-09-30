@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../../models/post';
 import { ApiSettings } from '../../../../shared/constants/api.constant';
-import { NgRedux } from 'ng2-redux';
+import { NgRedux } from '@angular-redux/store';
 import { PostService } from '../../services/post.service';
 import { IPoststate } from '../../helpers/post.store';
 import { REMOVE_POST } from '../../helpers/post.constant';
